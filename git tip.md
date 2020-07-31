@@ -18,7 +18,11 @@
 
 * commit 버전의 이력을 확정짓는 명령어, 해당시점을 스냅샷으로 만들어 기록
 
-`$ git commit -m` 
+`$ git commit -m`
+
+`$ git commit --amend` : 제일 마지막 커밋기록 수정가능 #저장후에 :wq
+
+
 
 `$ git commit만 쳤을때` : esc : q 로 나가기
 
@@ -27,7 +31,7 @@
 
 
 ```bash
-$ git config --global user.name Nojeong #이름설정
+$ git conㅐfig --global user.name Nojeong #이름설정
 $ git config --global user.email op032@naver.com #이메일 설정
 ```
 
@@ -40,13 +44,21 @@ $ git config --global user.email op032@naver.com #이메일 설정
 `$ git log` 
 
 *  완성된 메모장에   
-  * 정말 중요하거나 필요없는것, 퍼블릭에 올리지말것(블랙리스트) 파일이름 적기ex) d.txt, 폴더이름/
+  * 정말 중요하거나 필요없는것, 퍼블릭에 올리지말것(블랙리스트) 파일이름 적기ex) d.txt, 폴더이름
+
+`$ git log --oneline` 
+
+* 간단하게 커밋을 볼 수 있음
+
+`$ git diff`
+
+* 파일들의 수정된 점을 알려줌
 
 `$ echo > .gitignore`
 
 gitignore.io
 
-
+`git reset HEAD^` 이전 커밋 지우기
 
 복사는 시프트 + 인서트 
 
