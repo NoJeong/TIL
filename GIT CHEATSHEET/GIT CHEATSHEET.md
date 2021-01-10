@@ -20,27 +20,39 @@ https://ssafyprj.github.io/git/?locale=ko 를 풀면서 정리한것
 
 - `bugFix`라는 새 브랜치를 만듭니다
 
-  `git branch bugFix`
+  ```
+  git branch bugFix
+  ```
 
 - `git checkout bugFix`를 입력해 `bugFix` 브랜치로 이동(checkout)합니다.
 
-  `git checkout bugFix`
+  ```
+  git checkout bugFix
+  ```
 
 - 커밋 한 번 하세요
 
-  `git commit`
+  ```
+  git commit
+  ```
 
 - `git checkout` 명령어를 이용해 `master`브랜치로 돌아갑니다
 
-  `git checkout master`
+  ```
+  git checkout master
+  ```
 
 - 커밋 또 하세요
 
-  `git commit`
+  ```
+  git commit
+  ```
 
 - `git merge` 명령어로 `bugFix`브랜치를 `master`에 합쳐 넣습니다.
 
-  `git merge bugFix`
+  ```
+  git merge bugFix
+  ```
 
 
 
@@ -50,7 +62,11 @@ https://ssafyprj.github.io/git/?locale=ko 를 풀면서 정리한것
 
 `bugFix` 브랜치에서의 작업을 `master` 브랜치 위로 직접 옮겨 놓으려고 합니다. 그렇게 하면, 실제로는 두 기능을 따로따로 개발했지만, 마치 순서대로 개발한 것처럼 보이게 됩니다.
 
-`git rebase master`
+```
+git rebase master
+```
+
+
 
 ![image-20210107145404583](C:\Users\multicampus\AppData\Roaming\Typora\typora-user-images\image-20210107145404583.png)
 
@@ -64,7 +80,11 @@ master가 아직 그대로라는 문제가 남아있는데요,
 
 우리는 지금 `master` 브랜치를 선택한 상태입니다. `bugFix` 브랜치쪽으로 리베이스 해보겠습니다
 
-`git rebase bugFix`
+```
+git rebase bugFix
+```
+
+
 
 ![image-20210107145534589](C:\Users\multicampus\AppData\Roaming\Typora\typora-user-images\image-20210107145534589.png)
 
@@ -215,3 +235,203 @@ Git 체리-픽은 여러분이 원하는 커밋이 무엇인지 알때(각각의
 ![image-20210107154258107](C:\Users\multicampus\AppData\Roaming\Typora\typora-user-images\image-20210107154258107.png)
 
 ![image-20210107154319810](C:\Users\multicampus\AppData\Roaming\Typora\typora-user-images\image-20210107154319810.png)
+
+
+
+## 커밋 갖고놀기
+
+#### REBASE 로 해보기
+
+- `git rebase -i` 명령으로 우리가 바꿀 커밋을 가장 최근 순서로 바꾸어 놓습니다
+
+  `git rebase -i HEAD~2`
+
+- `git commit --amend` 명령으로 커밋 내용을 정정합니다
+
+  `git commit --amend`
+
+- 다시 `git rebase -i` 명령으로 이 전의 커밋 순서대로 되돌려 놓습니다
+
+  `git rebase -i HEAD~2`
+
+- 마지막으로, master를 지금 트리가 변경된 부분으로 이동합니다. (편하신 방법으로 하세요)
+
+  `git rebase caption`
+
+#### CHERRY_PICK으로 해보기
+
+![image-20210109133725014](C:\Users\multicampus\AppData\Roaming\Typora\typora-user-images\image-20210109133725014.png)
+
+ `git checkout master`
+
+![image-20210109133737685](C:\Users\multicampus\AppData\Roaming\Typora\typora-user-images\image-20210109133737685.png)
+
+` git cherry-pick C2`
+
+![image-20210109133806249](C:\Users\multicampus\AppData\Roaming\Typora\typora-user-images\image-20210109133806249.png)
+
+`git branch -f master HEAD~1`
+
+![image-20210109133836977](C:\Users\multicampus\AppData\Roaming\Typora\typora-user-images\image-20210109133836977.png)
+
+` git cherry-pick C2' C3`
+
+C2'' - C3' 생성
+
+
+
+## GIT 태그
+
+여러분은 여러분의 프로젝트의 역사(작업 이력)에서 중요한 지점들에 *영구적으로* 표시를 할 방법이 없을까 궁금할것입니다. 주요 릴리즈나 큰 브랜치 병합(merge)이 있을때가 그런 상황이겠군요
+
+Git 태그는 특정 커밋들을 브랜치로 참조하듯이 영구적인 "milestone(이정표)"으로 표시합니다.
+
+중요한 점은, Git 태그는 커밋들이 추가적으로 생성되어도 절대 움직이지 않는다는 것입니다. 여러분은 태그를 "체크아웃"한 후에 그 태그에서 어떤 작업을 완료할 수 없습니다
+
+![image-20210109134035230](C:\Users\multicampus\AppData\Roaming\Typora\typora-user-images\image-20210109134035230.png)
+
+`git tag v1 C1`
+
+![image-20210109134103494](C:\Users\multicampus\AppData\Roaming\Typora\typora-user-images\image-20210109134103494.png)
+
+## GIt Describe 
+
+커밋 트리에서 태그가 훌륭한 "닻"역할을 하기 때문에, git에는 여러분이 가장 가까운 "닻(태그)"에 비해 상대적으로 어디에 위치해있는지 *describe(묘사)*해주는 명령어가 있습니다. 이 명령어는 `git describe` 입니다!
+
+
+
+Git describe는 커밋 히스토리에서 앞 뒤로 여러 커밋을 이동하고 나서 커밋 트리에서 방향감각을 다시 찾는데 도움을 줍니다; 이런 상황은 git bisect(문제가 되는 커밋을 찾는 명령어라고 간단히 생각하자)를 하고 나서라던가 휴가를 다녀온 동료의 컴퓨터에 앉는경우가 있습니다.
+
+
+
+it describe 는 다음의 형태를 가지고 있습니다:
+
+```
+git describe <ref>
+```
+
+`<ref>`에는 commit을 의미하는 그 어떤것이던 쓸 수 있습니다. 만약 ref를 특정 지어주지 않으면, git은 그냥 지금 체크아웃된곳을 사용합니다 (`HEAD`).
+
+명령어의 출력은 다음과 같은 형태로 나타납니다:
+
+```
+<tag>_<numCommits>_g<hash>
+```
+
+`tag`는 가장 가까운 부모 태그를 나타냅니다. `numCommits`은 그 태그가 몇 커밋 멀리있는지를 나타냅니다. `<hash>`는 묘사하고있는 커밋의 해시를 나타냅니다.
+
+
+
+![image-20210109134834031](C:\Users\multicampus\AppData\Roaming\Typora\typora-user-images\image-20210109134834031.png)
+
+```git
+git tag v2 C3
+```
+
+![image-20210109134915015](C:\Users\multicampus\AppData\Roaming\Typora\typora-user-images\image-20210109134915015.png)
+
+`git describe master` 명령은 다음을 출력합니다:
+
+```
+v1_2_gC2
+```
+
+`git describe side`는 다음을 출력합니다:
+
+```
+v2_1_gC4
+```
+
+
+
+## 여러 브랜치 리베이스 하기
+
+![image-20210109145523369](C:\Users\multicampus\AppData\Roaming\Typora\typora-user-images\image-20210109145523369.png)
+
+```
+git rebase master bugFix
+```
+
+![image-20210109150102356](C:\Users\multicampus\AppData\Roaming\Typora\typora-user-images\image-20210109150102356.png)
+
+```
+git rebase bugFix side
+```
+
+![image-20210109150224552](C:\Users\multicampus\AppData\Roaming\Typora\typora-user-images\image-20210109150224552.png)
+
+```
+git rebase side another
+```
+
+![image-20210109150252229](C:\Users\multicampus\AppData\Roaming\Typora\typora-user-images\image-20210109150252229.png)
+
+* master 땡겨오기
+
+```
+git rebase another master
+```
+
+
+
+## 부모 선택하기
+
+![image-20210109150717985](C:\Users\multicampus\AppData\Roaming\Typora\typora-user-images\image-20210109150717985.png)
+
+```
+git checkout master^
+```
+
+* 첫 부모를따라간다
+
+![image-20210109150746327](C:\Users\multicampus\AppData\Roaming\Typora\typora-user-images\image-20210109150746327.png)
+
+```
+git checkout master^2
+```
+
+* 2번째 부모를 따라간다
+
+![image-20210109150831342](C:\Users\multicampus\AppData\Roaming\Typora\typora-user-images\image-20210109150831342.png)
+
+#### 실습
+
+![image-20210109150910767](C:\Users\multicampus\AppData\Roaming\Typora\typora-user-images\image-20210109150910767.png)
+
+```
+git checkout HEAD~; git checkout HEAD^2; git checkout HEAD~2
+```
+
+```
+C6 -> C5 ->C3
+```
+
+* 이코드도 같은코드다
+
+```
+git checkout HEAD~^2~2
+```
+
+## 브랜치 스파게티
+
+![image-20210109151820297](C:\Users\multicampus\AppData\Roaming\Typora\typora-user-images\image-20210109151820297.png)
+
+```
+git checkout one;git cherry-pick C4 C3 C2
+```
+
+![image-20210109151858591](C:\Users\multicampus\AppData\Roaming\Typora\typora-user-images\image-20210109151858591.png)
+
+```
+git checkout two
+git cherry-pick C5 C4 C3 C2
+```
+
+![image-20210109151932277](C:\Users\multicampus\AppData\Roaming\Typora\typora-user-images\image-20210109151932277.png)
+
+```
+git branch -f three C2
+```
+
+![image-20210109152000355](C:\Users\multicampus\AppData\Roaming\Typora\typora-user-images\image-20210109152000355.png)
+
