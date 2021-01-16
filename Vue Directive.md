@@ -3,8 +3,6 @@
 ```vue
 <div id="app"></div>
 
-
-
 <script>
 	const app = new Vue({
         el : '#app', //어떤 엘리먼트와 연결할 지 정함
@@ -17,7 +15,7 @@
             // 메소드를 정의 할 때는 화살표 함수를 사용하지 않는다. (this)
         }
     }) 
-
+  
 </script>
 ```
 
