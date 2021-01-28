@@ -6,7 +6,7 @@ https://ssafyprj.github.io/git/?locale=ko 를 풀면서 정리한것
 
 
 
-`git merge` : 
+`git merge` :  
 
 > 부모branch로 합치기
 
@@ -434,4 +434,153 @@ git branch -f three C2
 ```
 
 ![image-20210109152000355](C:\Users\multicampus\AppData\Roaming\Typora\typora-user-images\image-20210109152000355.png)
+
+
+
+## fetch는 무엇을 하는가
+
+`git fetch`는 두가지의 중요한 단계를 수행합니다.
+
+- 원격 저장소에는 있지만 로컬에는 없는 커밋들을 다운로드 받습니다. 
+- 우리의 원격 브랜치가 가리키는곳을 업데이트합니다 (예를들어, `o/master`)
+
+`git fetch`는 본질적으로 *로컬_에서 나타내는 원격 저장소의 상태를 _실제* 원격 저장소의 (지금)상태와 동기화합니다.
+
+이전 레슨을 기억한다면, 원격 브랜치는 가장 최근 원격 원격저장소와 작업을 했을때를 기준으로 원격 저장소의 상태를 반영한다고 했습니다. `git fetch`가 그러한 작업중에 하나입니다!
+
+원격 브랜치와 `git fetch`의 관계를 분명하게 알게되셨으면 좋겠습니다.
+
+`git fetch`는 일반적으로 원격 저장소와 인터넷을 통해 접근합니다(`http://` 또는 `git://`와같은 프로토콜로).
+
+`git fetch`는 그러나, *여러분의* 로컬 상태는 전혀 바꾸지 않는습니다. 여러분의 `master` 브랜치도 업데이트하지 않고 파일 시스템의 모습이던 그 어떤것도 바꾸지 않습니다.
+
+이것을 이해하는게 아주 중요한데, 왜냐하면 수 많은 개발자들이 `git fetch`를 하면 자신의 로컬 작업이 변경되어 원격 저장소의 모습을 반영해 업데이트 될것이라고 생각하기 때문입니다. 앞의 과정에 필요한 데이터를 다운로드는 하지만, 실제로 로컬 파일들이나 브랜치를 변경하지는 않습니다. 이것을 하기위한 명령어들은 뒤에서 배우겠습니다 :D
+
+간단하게 `git fetch`를 다운로드 단계로 생각할 수 있습니다.
+
+![image-20210128100031752](GIT%20CHEATSHEET.assets/image-20210128100031752.png)
+
+```git
+git fetch
+```
+
+![image-20210128100103237](GIT%20CHEATSHEET.assets/image-20210128100103237.png)
+
+* 다 다운로드 되었다
+
+
+
+## git pull
+
+![image-20210128100214396](GIT%20CHEATSHEET.assets/image-20210128100214396.png)
+
+```git
+git fetch; git merge o/master
+```
+
+![image-20210128100309635](GIT%20CHEATSHEET.assets/image-20210128100309635.png)
+
+
+
+우리는 `C3`를 `fetch`로 내려 받고 `git merge o/master`로 우리의 작업으로 병합했습니다. 이제 우리의 `master` 브랜치는 원격 저장소의 새 작업들을 반영하게 됩니다(지금 사례에서 `origin`입니다).
+
+```git
+git pull
+```
+
+을 사용해도 같은일이 일어난다
+
+
+
+## git 이 꼬일때
+
+상상을 해봅시다. 여러분은 월요일에 저장소를 clone해서 부가기능을 만들기 시작했습니다. 금요일쯤 기능을 공개할 준비가 되었습니다 -- 그런데 오 이런! 동료들이 주중에 코딩을 잔뜩해서 여러분이 만든 기능은 프로젝트에 뒤떨어져서 무용지물이 되었습니다. 이 사람들이 그 커밋들을 공유하고있는 원격 저장소에도 공개했습니다, 이제 *여러분의* 작업은 이제 의미가 없는 *구*버전의 프로젝트를 기반으로한 작업이 되어버렸습니다.
+
+이런 경우, 명령어 `git push`가 할 일이 애매해집니다. `git push`를 수행했을때, git은 원격 저장소를 여러분이 작업했던 월요일의 상태로 되돌려야 할까요? 아니면 새 코드를 건들지 않고 여러분의 코드만 추가해야 되나요? 아니면 여러분의 작업은 뒤 떨어졌기 때문에 완전히 무시해야되나요?
+
+이렇게 상황이 애매모호하기 때문에(히스토리가 엇갈렸기 때문이죠), git은 여러분이 `push`하지 못하게 합니다. 사실 여러분이 작업을 공유하기전에 원격 저장소의 최신 상태를 합치도록 강제합니다.
+
+![image-20210128102006626](GIT%20CHEATSHEET.assets/image-20210128102006626.png)
+
+```git
+git push
+```
+
+* 아무변화가 일어나지 않는다
+
+명령어가 실행되지 않아서 아무것도 잃어나지 않습니다. 여러분의 최근 커밋 `C3`가 원격저장소의 `C1`을 기반으로 하기 때문에 `git push`가 실패합니다. 원격 저장소는 `C2`까지 갱신된 상태기때문에 git은 여러분의 push를 거부하게됩니다.
+
+* 이경우 리베이스로 작업하자
+
+
+
+```git
+git fetch
+git rebase o/master
+git push
+```
+
+![image-20210128102228147](GIT%20CHEATSHEET.assets/image-20210128102228147.png)
+
+`git fetch`로 원격 저장소의 변경정보를 가져오고, 새 변경들로 우리 작업을 리베이스 했습니다, 이제 `git push`하면 끝!
+
+```git
+git fetch
+git merge o/master
+git push
+```
+
+![image-20210128102332848](GIT%20CHEATSHEET.assets/image-20210128102332848.png)
+
+이렇게 해도 댄다
+
+`git fetch`로 원격 저장소의 변경정보를 가져오고, 새 작업을 우리 작업으로 *병합*했습니다 (원격 저장소의 변경을 반영하기 위해서죠), 이제 `git push`하면 끝!
+
+
+
+* 여러분은 `git pull`이 fetch와 merge의 줄임 명령어라는 것은 이미 알고 있을 것입니다. 아주 간단하게, `git pull --rebase`를 하면 fetch와 리베이스를 하는 작업의 줄임 명령어 입니다
+
+```git
+git pull -rebase
+git push
+```
+
+![image-20210128102453496](GIT%20CHEATSHEET.assets/image-20210128102453496.png)
+
+```git
+git pull
+git push
+```
+
+
+
+![image-20210128102537113](GIT%20CHEATSHEET.assets/image-20210128102537113.png)
+
+* 차이가 없다
+
+
+
+
+
+## master에 잘못 커밋했을때
+
+![image-20210128114504977](GIT%20CHEATSHEET.assets/image-20210128114504977.png)
+
+```git
+git reset --hard o/master
+```
+
+![image-20210128114624960](GIT%20CHEATSHEET.assets/image-20210128114624960.png)
+
+```git
+git checkout -b feature C2
+```
+
+![image-20210128114651058](GIT%20CHEATSHEET.assets/image-20210128114651058.png)
+
+```git
+git push origin feature
+```
+
+![image-20210128114740889](GIT%20CHEATSHEET.assets/image-20210128114740889-1611808602138.png)
 
