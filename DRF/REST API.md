@@ -24,6 +24,8 @@
   * PUT/PATCH : 데이터를 수정
   * DELETE : 데이터 삭제 
 
+
+
 - HTTPmethod + 자원(URI)의 표현
 
 ------
