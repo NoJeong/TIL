@@ -68,7 +68,7 @@ git rebase master
 
 
 
-![image-20210107145404583](C:\Users\multicampus\AppData\Roaming\Typora\typora-user-images\image-20210107145404583.png)
+![image-20210107145404583](GIT%20CHEATSHEET.assets/image-20210107145404583.png)
 
 오! 이제 bugFix 브랜치의 작업 내용이 master의 바로 위에 깔끔한 한 줄의 커밋으로 보이게 됐습니다.
 
@@ -86,7 +86,7 @@ git rebase bugFix
 
 
 
-![image-20210107145534589](C:\Users\multicampus\AppData\Roaming\Typora\typora-user-images\image-20210107145534589.png)
+![image-20210107145534589](GIT%20CHEATSHEET.assets/image-20210107145534589.png)
 
 보세요! `master`가 `bugFix`의 부모쪽에 있었기 때문에, 단순히 그 브랜치를 더 앞쪽의 커밋을 가리키게 이동하는 것이 전부입니다
 
@@ -118,11 +118,11 @@ HEAD를 분리한다는 것은 HEAD를 브랜치 대신 커밋에 붙이는 것�
 
 HEAD -> master -> C1
 
-![image-20210107150046098](C:\Users\multicampus\AppData\Roaming\Typora\typora-user-images\image-20210107150046098.png)
+![image-20210107150046098](GIT%20CHEATSHEET.assets/image-20210107150046098.png)
 
 `git chechout C1`
 
-![image-20210107150113736](C:\Users\multicampus\AppData\Roaming\Typora\typora-user-images\image-20210107150113736.png)
+![image-20210107150113736](GIT%20CHEATSHEET.assets/image-20210107150113736.png)
 
 이제는 이렇게 되는군요
 
@@ -136,19 +136,19 @@ HEAD -> C1
 
 `master^^` 는 "`master`의 조부모(부모의 부모)"를 의미합니다
 
-![image-20210107150553192](C:\Users\multicampus\AppData\Roaming\Typora\typora-user-images\image-20210107150553192.png)
+![image-20210107150553192](GIT%20CHEATSHEET.assets/image-20210107150553192.png)
 
 `git checkout master^`
 
-![image-20210107150614450](C:\Users\multicampus\AppData\Roaming\Typora\typora-user-images\image-20210107150614450.png)
+![image-20210107150614450](GIT%20CHEATSHEET.assets/image-20210107150614450.png)
 
 돌아가고 싶은 커밋의 갯수를 `~`뒤의 숫자로 명시해 줍시다.
 
-![image-20210107150815809](C:\Users\multicampus\AppData\Roaming\Typora\typora-user-images\image-20210107150815809.png)
+![image-20210107150815809](GIT%20CHEATSHEET.assets/image-20210107150815809.png)
 
 `git checkout HEAD~4`
 
-![image-20210107150825528](C:\Users\multicampus\AppData\Roaming\Typora\typora-user-images\image-20210107150825528.png)
+![image-20210107150825528](GIT%20CHEATSHEET.assets/image-20210107150825528.png)
 
 #### 브랜치 강제로 옮기기
 

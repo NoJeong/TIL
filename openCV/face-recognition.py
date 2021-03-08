@@ -73,6 +73,7 @@ enc_unknown_face = fr.face_encodings(unknown_face)
 #등록된 얼굴리스트를 비교
 for face in known_person_list:
 
+
   #등록된 얼굴을 129-dimensional face 인코딩
   enc_known_face = fr.face_encodings(face)
 
